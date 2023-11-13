@@ -16,7 +16,7 @@ body {
 
 .signup_header {
   height: 10vw;
-  min-height: 60px;
+  min-height: 100px;
   max-height: 108px;
   display: flex;
   flex-direction: column;
@@ -25,9 +25,11 @@ body {
 }
 
 .signup_header img {
-  height: 80%;
-  max-width: 200px;
-  min-height: 40px; 
+  width: 400px;   /* Nuevo ancho deseado */
+  height: 380px;  /* Nueva altura deseada */
+  max-width: 100%;  /* Asegura que la imagen no exceda el ancho máximo */
+  max-height: 100%; /* Asegura que la imagen no exceda la altura máxima */
+  object-fit: cover; /* Escala la imagen mientras mantiene la relación de aspecto */
   transform: translateX(-8px);
 }
 
@@ -48,18 +50,18 @@ body {
 }
 
 .corner-link {
-  position: fixed; /* Fija la posición en la ventana del navegador */
-  top: 10px; /* Distancia desde la parte superior */
-  right: 10px; /* Distancia desde la derecha */
-  width: 100px; /* Ancho de la imagen */
-  height: auto; /* Altura ajustada automáticamente para mantener la proporción */
-  z-index: 1000; /* Z-index para asegurarse de que esté encima de otros elementos */
+  position: fixed; 
+  top: 10px; 
+  right: 10px; 
+  width: 100px; 
+  height: auto; 
+  z-index: 1000; 
 }
 
 .corner-link img {
-  width: 100%; /* Ajusta el ancho al 100% del contenedor */
-  height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
-  border-radius: 5px; /* Opcional: agrega bordes redondeados a la imagen */
+  width: 100%; 
+  height: auto; 
+  border-radius: 5px; 
 }
 
 
