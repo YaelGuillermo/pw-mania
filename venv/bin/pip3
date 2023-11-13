@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/mnt/c/Users/CompuExpress/Documents/Programacion Web/proyectoo/mania-app/venv/bin/python3" "$0" "$@"
-' '''
+#!/home/yaelgonzalez/Escritorio/mania-app/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
