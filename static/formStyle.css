@@ -47,6 +47,22 @@ body {
   width: 100%;
 }
 
+.corner-link {
+  position: fixed; /* Fija la posición en la ventana del navegador */
+  top: 10px; /* Distancia desde la parte superior */
+  right: 10px; /* Distancia desde la derecha */
+  width: 100px; /* Ancho de la imagen */
+  height: auto; /* Altura ajustada automáticamente para mantener la proporción */
+  z-index: 1000; /* Z-index para asegurarse de que esté encima de otros elementos */
+}
+
+.corner-link img {
+  width: 100%; /* Ajusta el ancho al 100% del contenedor */
+  height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+  border-radius: 5px; /* Opcional: agrega bordes redondeados a la imagen */
+}
+
+
 .label {
   display: inline-block;
   margin-bottom: 5px;
