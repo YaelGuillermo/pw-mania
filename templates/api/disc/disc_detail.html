@@ -1,0 +1,37 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    Disc Detail
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Disc Detail</h2>
+        <dl class="row">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">{{ disc.id }}</dd>
+
+            <dt class="col-sm-3">User:</dt>
+            <dd class="col-sm-9">{{ disc.user }}</dd>
+
+            <dt class="col-sm-3">Title:</dt>
+            <dd class="col-sm-9">{{ disc.title }}</dd>
+
+            <dt class="col-sm-3">Genres:</dt>
+            <dd class="col-sm-9">
+                {% for genre in disc.genres.all %}
+                  {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </dd>
+
+            <dt class="col-sm-3">Duration:</dt>
+            <dd class="col-sm-9">{{ disc.duration }}</dd>
+
+            <dt class="col-sm-3">Video:</dt>
+            <dd class="col-sm-9">{{ disc.video }}</dd>
+        </dl>
+
+        <a href="{% url 'api:disc_list' %}" class="btn btn-secondary">Back to Disc List</a>
+    </div>
+{% endblock content %}
+

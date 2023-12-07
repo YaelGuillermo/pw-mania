@@ -1,0 +1,23 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+   Like Detail
+{% endblock title %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Like Detail</h2>
+    <dl class="row">
+      <dt class="col-sm-3">ID:</dt>
+      <dd class="col-sm-9">{{ like.id }}</dd>
+
+      <dt class="col-sm-3">User:</dt>
+      <dd class="col-sm-9">{{ like.user.username }}</dd>
+
+      <dt class="col-sm-3">Song:</dt>
+      <dd class="col-sm-9">{{ like.song.title }}</dd>
+    </dl>
+
+    <a href="{% url 'api:like_list' %}" class="btn btn-secondary">Back to Like List</a>
+  </div>
+{% endblock content %}

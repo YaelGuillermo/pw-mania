@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+   Create Artist
+{% endblock title %}
+
+{% block content %}
+  <h2>Create Artist</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+          {{ form.name }}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.nickname.id_for_label }}" class="form-label">Nickname</label>
+          {{ form.nickname }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.image.id_for_label }}" class="form-label">Image</label>
+            {{ form.image }}
+        </div>        
+        <div class="mb-3">
+          <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+          {{ form.description }}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.birth_date.id_for_label }}" class="form-label">Birth Date</label>
+          {{ form.birth_date }}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.nationality.id_for_label }}" class="form-label">Nationality</label>
+          {{ form.nationality }}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.genres.id_for_label }}" class="form-label">Genres</label>
+          {{ form.genres }}
+        </div>
+        <button type="submit" class="btn btn-primary">Create Artist</button>
+        <a href="{% url 'api:artist_list' %}" class="btn btn-secondary">Artist List</a>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
+

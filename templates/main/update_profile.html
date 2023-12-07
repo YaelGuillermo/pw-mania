@@ -1,0 +1,55 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'formStyle.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block iframe %}
+ 
+{% endblock %}
+
+{% block main %}
+<div class="signup_body" style="background-color: #222326">
+
+  <form method="post" enctype="multipart/form-data" class="login_form" style="background-color: #222326">
+    {% csrf_token %}
+
+    <div class="signup-title">
+      <strong> Update {{user.username}}'s Profile </strong>
+    </div>
+
+    <input type="hidden" name="{{ user_form.username.name }}" value="{{ user_form.username.value }}">
+
+      <label class="label" for="{{ user_form.first_name.id_for_label }}">First Name:</label>
+      {{ user_form.first_name }}
+
+      <label class="label" for="{{ user_form.last_name.id_for_label }}">Last Name:</label>
+      {{ user_form.last_name }}
+    
+      <label class="label" for="{{ user_form.email.id_for_label }}">Email:</label>
+      {{ user_form.email }}
+    
+      <label class="label" for="{{ profile_form.birth_date.id_for_label }}">Birth Date:</label>
+      {{ profile_form.birth_date }}
+    
+      <label class="label" for="{{ profile_form.biography.id_for_label }}" style="font-family: Circular, Helvetica Neue, Helvetica, Arial, sans-serif;">Biography:</label>
+      {{ profile_form.biography }}
+    
+      <label class="label" for="{{ profile_form.image.id_for_label }}">Profile Image:</label>
+      {{ profile_form.image }}
+
+    <button class='btn btn_log_in' type="submit">Update Profile</button>
+    <div class="divider"></div>
+    <p class='label center-align'>Don't have any change?</p>
+    <a class='btn btn_sign_up' href="{% url 'main:profile' %}" >Back</a>
+  </form>
+</div>
+{% endblock %}
+
+
+
+

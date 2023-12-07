@@ -1,0 +1,48 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+	<div class="playlist__left">
+		<div class="playlist__album">
+			<img src="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png" alt="" class="playlist__img">
+        </div>
+    </div>
+    <div class="playlist__right">
+        <div style='font-weight: 700;font-size: 12px;'>PLAYLIST</div>
+        <div class="playlist__name">Liked Songs</div>
+        <div>{{ request.user }}<span class='grey_text'> . {{user.username}} Songs<span></div>
+    </div>
+</div>
+
+<div class="playlist__list">
+    <div class="playlist__header">
+        <div class="playlist__headerTitle"># TITLE</div>
+        <div class="playlist__headerAlbum">ALBUM</div>
+        <div class="playlist__headerDate">DATE ADDED</div>
+        <div class="playlist__headerDuration">
+            <img src="https://img.icons8.com/pastel-glyph/344/clock--v1.png" alt="">
+        </div>
+    </div>
+    <hr class="divider">
+
+    {% for like in liked_songs %}
+        <div class="playlist__item">
+            <div class="playlist__itemTitle">{{ like.song.title }}</div>
+            <div class="playlist__itemAlbum">{{ like.song.album }}</div>
+            <div class="playlist__itemDate">{{ like.date_added }}</div>
+            <div class="playlist__itemDuration">{{ like.song.duration }}</div>
+            <!-- Agrega más campos según sea necesario -->
+        </div>
+        <hr class="divider">
+    {% endfor %}
+</div>
+
+{% endblock %}

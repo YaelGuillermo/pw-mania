@@ -1,4 +1,4 @@
-#!/home/yaelgonzalez/Escritorio/mania-app/venv/bin/python3
+#!/home/yaelgonzalez/Escritorio/god/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

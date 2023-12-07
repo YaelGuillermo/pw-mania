@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mania{% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'api:developer_menu' %}">Mania</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:user_list' %}">User</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:profile_list' %}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:country_list' %}">Country</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:genre_list' %}">Genre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:artist_list' %}">Artist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:album_list' %}">Album</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:playlist_list' %}">Playlist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:song_list' %}">Song</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:disc_list' %}">Disc</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'api:like_list' %}">Like</a>
+                        </li>
+                        <div class="d-flex">
+                            <a class="nav-link" href="/logout">Log Out</a>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row mt-3">
+            <div class="col">
+                <h1>{% block header %}{% endblock header %}</h1>
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>
+

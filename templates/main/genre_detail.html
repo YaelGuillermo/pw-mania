@@ -1,0 +1,95 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+  
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+    <div class="playlist__right">
+        <div class="playlist__name">
+            {{ genre.name }}
+        </div>
+        <div style='font-weight: 700; font-size: 12px;'>
+          {{ genre.description }}
+      </div>
+    </div>
+</div>
+
+<div class="playlist__optionbar-container text-center">
+  <div style='font-size: 18px'>
+    <div class="homecontainer">
+      <div class="category">
+        <div class="catTitle">
+          <span class='label catName underline-on-hover'> {{ genre.name }}'s artists </span>
+          <a href="{% url 'main:album_list' %}">
+            <span class='label seeall underline-on-hover'>SEE ALL</span>
+          </a>
+        </div>
+        <div class="cardContainer">
+          {% for artist in artists_in_genre %}
+            <div class="card c1">
+              <div class="albumcover">
+                <img class="albumimg" src="{% if artist.image %}{{ artist.image.url }}{% else %}{% static 'profiles/NoProfile.jpg' %}{% endif %}" alt="{{ artist.name }}'s photo">
+              </div>
+              <a href="{% url 'main:artist_detail' pk=artist.id %}">
+                <span class='label albumtitle bond-to-two-lines'>{{ artist.name }}</span>
+              </a>
+              <span class='label albumauthor bond-to-two-lines'>
+                {% for genre in artist.genres.all %}
+                  {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="category">
+        <div class="catTitle">
+          <span class='label catName underline-on-hover'> {{ genre.name }}'s albums </span>
+          <a href="{% url 'main:album_list' %}">
+            <span class='label seeall underline-on-hover'>SEE ALL</span>
+          </a>
+        </div>
+        <div class="cardContainer">
+          {% for album in albums_in_genre %}
+            <div class="card c1">
+              <div class="albumcover">
+                <img class="albumimg" src="{{ album.image.url }}" alt="{{ album.title }}">
+                <!-- Botón de reproducción -->
+                <div class="albumplay" onclick="playAlbum('{{ album.id }}', ['{{ album.get_all_video_ids|join:',' }}'])">
+                  <img src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png" alt="">
+                </div>
+              </div>
+              <a href="{% url 'main:album_detail' pk=album.id %}">
+                <span class='label albumtitle bond-to-two-lines'>{{ album.title }}</span>
+              </a>
+              <a href="{% url 'main:artist_detail' pk=album.artists.first.id %}">
+                <span class='label albumauthor bond-to-two-lines'>
+                  {% for artist_in_album in album.artists.all %}
+                    By {{ artist_in_album.name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </span>
+              </a>
+              <a href="{% url 'main:genre_detail' pk=album.genres.first.id %}">
+                <span class='label albumauthor bond-to-two-lines'>
+                  {% for genre_in_album in album.genres.all %}
+                    {{ genre_in_album.name }}{% if not forloop.last %}, {% endif %}
+                  {% endfor %}
+                </span>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

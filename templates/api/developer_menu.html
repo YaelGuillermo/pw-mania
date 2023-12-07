@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    Developer Menu
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center mb-3">Developer Menu</h2>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Last Users Added</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for user in last_users %}
+                        <div class="col-md-3 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ user.id}}. {{ user.username }}</h5>
+                                    <p class="card-text">{{ user.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Last Artists Added</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for artist in last_artists %}
+                        <div class="col-md-3 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ artist.id}}. {{ artist.nickname }}</h5>
+                                    <p class="card-text">
+                                        {% if artist.image %}
+                                            <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="img-fluid" style="max-width: 600px; max-height: 800px; width: 100%; height: 100%;">
+                                        {% else %}
+                                            No Image
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text">{{ artist.calculate_age }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+{% endblock content %}

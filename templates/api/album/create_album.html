@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    Create Album
+{% endblock title %}
+
+{% block content %}
+    <h2>Create Album</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.artists.id_for_label }}" class="form-label">Artists</label>
+                    {{ form.artists }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.genres.id_for_label }}" class="form-label">Genres</label>
+                    {{ form.genres }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.date.id_for_label }}" class="form-label">Date</label>
+                    {{ form.date }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.image.id_for_label }}" class="form-label">Image</label>
+                    {{ form.image }}
+                </div>
+                <button type="submit" class="btn btn-primary">Create Album</button>
+                <a href="{% url 'api:album_list' %}" class="btn btn-secondary">Album List</a>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

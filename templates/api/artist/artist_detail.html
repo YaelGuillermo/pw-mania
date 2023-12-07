@@ -1,0 +1,40 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+   Artist Detail
+{% endblock title %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Artist Detail</h2>
+    <dl class="row">
+      <dt class="col-sm-3">ID:</dt>
+      <dd class="col-sm-9">{{ artist.id }}</dd>
+
+      <dt class="col-sm-3">Name:</dt>
+      <dd class="col-sm-9">{{ artist.name }}</dd>
+
+      <dt class="col-sm-3">Nickname:</dt>
+      <dd class="col-sm-9">{{ artist.nickname }}</dd>
+
+      <dt class="col-sm-3">Image:</dt>
+      <dd class="text-center">
+          {% if artist.image %}
+              <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="img-fluid" style="max-width: 400px; max-height: 600px;">
+          {% else %}
+              No Image
+          {% endif %}
+      </dd>
+
+      <dt class="col-sm-3">Description:</dt>
+      <dd class="col-sm-9">{{ artist.description }}</dd>
+
+      <dt class="col-sm-3">Birth Date:</dt>
+      <dd class="col-sm-9">{{ artist.birth_date }}</dd>
+    </dl>
+
+    <a href="{% url 'api:artist_list' %}" class="btn btn-secondary">Back to Artist List</a>
+  </div>
+{% endblock content %}
+
+

@@ -1,0 +1,106 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+  
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+    <div class="playlist__left">
+        <div class="playlist__album">
+            {% if artist.image %}
+                <img src="{{ artist.image.url }}" class="playlist__img" alt="{{ artist.name }}'s photo">
+            {% else %}
+                <img src="{% static 'profiles/NoProfile.jpg' %}" class="playlist__img" alt="Default photo">
+            {% endif %}
+        </div>
+    </div>
+    <div class="playlist__right">
+        <div style='text-transform: uppercase; font-weight: 700; font-size: 12px;'>
+            {{ artist.name }}'s Profile
+        </div>
+        <div class="playlist__name">
+            {{ artist.nickname }}
+        </div>
+        <div>
+            Genre: 
+            <span class='grey_text'>  
+                <a href="{% url 'main:genre_detail' pk=artist.genres.first.id %}">
+                    {% for genre in artist.genres.all %}
+                        {{ genre.name }}
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </a>
+            </span>
+        </div>
+        <div>
+            Country:
+            <a href="{% url 'main:country_detail' pk=artist.nationality.id %}">
+              <span class='grey_text'> 
+                {{ artist.nationality }}
+              </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="playlist__optionbar-container text-center">
+  <div style='font-size: 18px'>
+      <ul class="list-unstyled text-center">
+          <p>
+              <strong>Bio:</strong> {{ artist.description }}
+          </p>
+          <p>
+              <strong>Age:</strong> {{ artist.calculate_age }} years old
+          </p>
+      </ul>
+      <div class="homecontainer">
+        <div class="category">
+          <div class="catTitle">
+              <span class='label catName underline-on-hover'> {{ artist.nickname }}'s albums </span>
+              <a href="{% url 'main:album_list' %}">
+                <span class='label seeall underline-on-hover'>SEE ALL</span>
+              </a>
+          </div>
+          <div class="cardContainer">
+            {% for album in artist.album_set.all %}
+                <div class="card c1">
+                    <div class="albumcover">
+                        <img class="albumimg" src="{{ album.image.url }}" alt="{{ album.title }}">
+                        <!-- Botón de reproducción -->
+                        <div class="albumplay" onclick="playAlbum('{{ album.id }}', ['{{ album.get_all_video_ids|join:',' }}'])">
+                            <img src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png" alt="">
+                        </div>
+                    </div>
+                    <a href="{% url 'main:album_detail' pk=album.id %}">
+                        <span class='label albumtitle bond-to-two-lines'>{{ album.title }}</span>
+                    </a>
+                    <a href="{% url 'main:artist_detail' pk=album.artists.first.id %}">
+                        <span class='label albumauthor bond-to-two-lines'>
+                            {% for artist_in_album in album.artists.all %}
+                                By {{ artist_in_album.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </span>
+                    </a>
+                    <a href="{% url 'main:genre_detail' pk=album.genres.first.id %}">
+                        <span class='label albumauthor bond-to-two-lines'>
+                            {% for genre in album.genres.all %}
+                                {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

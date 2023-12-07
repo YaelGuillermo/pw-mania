@@ -1,0 +1,131 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+    <div class="playlist__left">
+      <div class="playlist__album">
+        {% if album.image %}
+          <img src="{{ album.image.url }}" class="playlist__img" alt="{{ user.username }}'s photo">
+        {% else %}
+          <img src="{% static 'default-album-image.jpg' %}" class="playlist__img" alt="Default photo">
+        {% endif %}
+      </div>
+    </div>
+    <div class="playlist__right">
+      <div style='text-transform: uppercase; font-weight: 700;font-size: 12px;'>
+        <a href="{% url 'main:artist_detail' pk=album.artists.first.id %}">
+            {% for artist in album.artists.all %}
+                {{ artist.name }}
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </a>
+      </div>
+      <div class="playlist__name">
+        {{ album.title }}
+      </div>
+      <div>Genre: <span class='grey_text'>  
+        <a href="{% url 'main:genre_detail' pk=album.genres.first.id %}">
+            {% for genre in album.genres.all %}
+                {{ genre.name }}
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </a>
+        <span>
+      </div>
+    </div>
+  </div>
+
+  <div class="playlist__optionbar-container text-center">
+    <div style='font-size: 18px'>
+    <ul class="list-unstyled text-center">
+      <p>
+        <strong>Description:</strong> {{ album.description }}
+      </p>
+      <p>
+        <strong>Date:</strong> {{ album.date }}
+      </p>
+    </ul>
+  </div>
+  </div>
+
+  <div class="playlist__list">
+    <div class="playlist__header" >
+        <div class="playlist__headerTitle"># TITLE</div>
+        <div class="playlist__headerAlbum">ARTIST</div>
+        <div class="playlist__headerDate">GENRE</div>
+        <div class="playlist__headerDuration">
+        <img src="https://img.icons8.com/pastel-glyph/344/clock--v1.png" alt="">
+        </div>
+    </div>
+    <hr class="divider">
+
+
+    <div class="playlist__songlist">
+    {% for song in album.song_set.all %}
+    <form action="" method="get">
+        <div class="playlist__song playlist__row" onclick='playSong("{{ song.get_video_id }}")'>
+        <div class="playlist__headerTitle">
+          <img class="playlist__albumimg" src="{{album.image.url}}" alt =''/>
+
+          <div class="playlist__songTitle ellipsis_one_line">
+          {{song.title}}
+          </div>
+
+          </div>
+        <div class="playlist__headerAlbum ellipsis_one_line">
+            {% for artist in album.artists.all %}
+                {{ artist.name }}
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+        <div class="playlist__headerDate">
+            {% for genre in album.genres.all %}
+                {{ genre.name }}
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+        <div class="playlist__headerDuration">
+        {{song.format_duration}}
+          <button class="delete" id="likeButton" data-user="{{ user.request }}" data-song="{{ song.id }}">
+            <img src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png">
+          </button>       
+        </div>
+    </div>
+    </form>
+    {% endfor %}
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+      // Escucha el clic en el botón
+      $('#likeButton').on('click', function () {
+          // Obtiene los datos del botón
+          var user = $(this).data('user');
+          var song = $(this).data('song');
+
+          // Realiza la solicitud AJAX
+          $.ajax({
+              url: '{% url "main:create_like" %}',
+              type: 'POST',
+              data: {
+                  'user': user,
+                  'song': song
+              },
+              success: function (data) {
+                  // Maneja la respuesta del servidor si es necesario
+                  console.log('Like guardado con éxito');
+              },
+              error: function (error) {
+                  console.error('Error al guardar el like', error);
+              }
+          });
+      });
+  });
+</script>
+{% endblock %}

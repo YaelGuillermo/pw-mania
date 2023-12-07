@@ -1,0 +1,98 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+    <div class="playlist__right">
+        <div class="playlist__name">
+            {% if query %}
+                Search Results for "{{ query }}"
+            {% else %}
+                All content
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="playlist__optionbar-container text-center">
+    <div style='font-size: 18px'>
+        <div class="homecontainer">
+            <div class="category">
+                <div class="catTitle">
+                    <span class='label catName underline-on-hover'> Artists </span>
+                    <!-- Opcional: Agregar enlaces de "See All" -->
+                </div>
+                <div class="cardContainer">
+                    {% if artists %}
+                        {% for artist in artists %}
+                            <div class="card c1">
+                                <div class="albumcover">
+                                    <img class="albumimg" src="{% if artist.image %}{{ artist.image.url }}{% else %}{% static 'profiles/NoProfile.jpg' %}{% endif %}" alt="{{ artist.name }}'s photo">
+                                </div>
+                                <a href="{% url 'main:artist_detail' pk=artist.id %}">
+                                    <span class='label albumtitle bond-to-two-lines'>{{ artist.name }}</span>
+                                </a>
+                                <span class='label albumauthor bond-to-two-lines'>
+                                    {% for genre in artist.genres.all %}
+                                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No results found for your search.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="catTitle">
+                    <span class='label catName underline-on-hover'> Albums </span>
+                </div>
+                <div class="cardContainer">
+                    {% if albums %}
+                        {% for album in albums %}
+                            <div class="card c1">
+                                <div class="albumcover">
+                                    <img class="albumimg" src="{{ album.image.url }}" alt="{{ album.title }}">
+                                    <!-- Botón de reproducción -->
+                                    <div class="albumplay" onclick="playAlbum('{{ album.id }}', ['{{ album.get_all_video_ids|join:',' }}'])">
+                                        <img src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png" alt="">
+                                    </div>
+                                </div>
+                                <a href="{% url 'main:album_detail' pk=album.id %}">
+                                    <span class='label albumtitle bond-to-two-lines'>{{ album.title }}</span>
+                                </a>
+                                <a href="{% url 'main:artist_detail' pk=album.artists.first.id %}">
+                                    <span class='label albumauthor bond-to-two-lines'>
+                                        {% for artist in album.artists.all %}
+                                            By {{ artist.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </a>
+                                <a href="{% url 'main:genre_detail' pk=album.genres.first.id %}">
+                                    <span class='label albumauthor bond-to-two-lines'>
+                                        {% for genre in album.genres.all %}
+                                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No results found for your search.</p>
+                    {% endif %}
+                </div>
+            </div>                                 
+        </div>
+    </div>
+</div>
+{% endblock %}
+

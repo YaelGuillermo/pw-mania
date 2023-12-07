@@ -1,0 +1,43 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'formStyle.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block iframe %}
+ 
+{% endblock %}
+
+{% block main %}
+<div class="signup_body" style="background-color: #222326">
+
+  <form method="post" enctype="multipart/form-data" class="login_form" style="background-color: #222326">
+    {% csrf_token %}
+    
+    <div class="signup-title">
+      <strong>Create a New Song for your Disc</strong>
+    </div>
+    
+    <label class="label" for="{{ disc_form.title.id_for_label }}">Title:</label>
+      {{ disc_form.title }}
+
+      <label class="label" for="{{ disc_form.genres.id_for_label }}">Genre:</label>
+      {{ disc_form.genres }}
+
+      <label class="label" for="{{ disc_form.duration.id_for_label }}">Duration:</label>
+      {{ disc_form.duration }}
+
+      <label class="label" for="{{ disc_form.video.id_for_label }}">Video:</label>
+      {{ disc_form.video }}
+
+      <button class='btn btn_log_in' type="submit">Create Disc</button>
+      <div class="divider"></div>
+      <a class='btn btn_sign_up' href="{% url 'main:disc_list' %}" >Back</a>
+
+  </form>
+</div>
+{% endblock %}

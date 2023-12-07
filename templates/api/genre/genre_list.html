@@ -1,0 +1,84 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    Genre List
+{% endblock title %}
+
+{% block content %}
+    <div class="container d-flex align-items-center justify-content-between">
+        <h2 class="text-center mb-2">Genre List</h2>
+        <div class="d-flex align-items-center">
+            <form class="form-inline" method="GET" action="{% url 'api:genre_list' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="search" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary" style="margin-right: 20px;">Search </button>
+                    </div>
+                </div>
+            </form>
+            <a href="{% url 'api:create_genre' %}" class="btn btn-primary ml-2">Create</a>
+        </div>
+    </div>
+    <h1></h1>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="bg-dark text-light">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for genre in object_list %}
+                    <tr class="{% cycle 'table-dark' 'table-secondary' %}">
+                        <td class="text-center">{{ genre.id }}</td>
+                        <td class="text-center">{{ genre.name }}</td>
+                        <td class="text-center">
+                            {% if genre.description %}
+                                {% if genre.description|length > 50 %}
+                                    {{ genre.description|slice:":50" }}... 
+                                    <a href="#" data-toggle="modal" data-target="#descriptionModal{{ genre.id }}">Read more</a>
+                                    
+                                    <!-- Modal para mostrar la descripción completa -->
+                                    <div class="modal fade" id="descriptionModal{{ genre.id }}" tabindex="-1" aria-labelledby="descriptionModalLabel{{ genre.id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="descriptionModalLabel{{ genre.id }}">Genre Description</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ genre.description }}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    {{ genre.description }}
+                                {% endif %}
+                            {% else %}
+                                No Description
+                            {% endif %}
+                        </td> 
+                        <td class="text-center">
+                            <a href="{% url 'api:update_genre' pk=genre.id %}" class="btn btn-warning btn-sm" style="margin-right: 10px;">Update</a>
+                            <a href="{% url 'api:genre_detail' pk=genre.id %}" class="btn btn-info btn-sm" style="margin-right: 10px;">Detail</a>
+                            <a href="{% url 'api:delete_genre' pk=genre.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+
+
+
+

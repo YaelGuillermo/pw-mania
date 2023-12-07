@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    Country Detail
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Country Detail</h2>
+        <dl class="row">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">{{ country.id }}</dd>
+
+            <dt class="col-sm-3">Name:</dt>
+            <dd class="col-sm-9">{{ country.name }}</dd>
+
+            <dt class="col-sm-3">Abbreviation:</dt>
+            <dd class="col-sm-9">{{ country.abbreviation }}</dd>
+
+            <dt class="col-sm-3">Image:</dt>
+            <dd class="col-sm-9">
+                {% if country.image %}
+                    <img src="{{ country.image.url }}" alt="{{ country.name }}" class="img-fluid" style="max-width: 400px; max-height: 600px;">
+                {% else %}
+                    No Image
+                {% endif %}
+            </dd>
+        </dl>
+
+        <a href="{% url 'api:country_list' %}" class="btn btn-secondary">Back to Country List</a>
+    </div>
+{% endblock content %}
+

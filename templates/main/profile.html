@@ -1,0 +1,56 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block iframe %}
+ 
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+  <div class="playlist__left">
+    <div class="playlist__album">
+      {% if user.profile.image %}
+        <img src="{{ user.profile.image.url }}" class="playlist__img" alt="{{ user.username }}'s photo">
+      {% else %}
+        <img src="{% static 'default-profile-image.jpg' %}" class="playlist__img" alt="Default photo">
+      {% endif %}
+    </div>
+  </div>
+  <div class="playlist__right">
+    <div style='text-transform: uppercase; font-weight: 700;font-size: 12px;'>
+      {{ user.username }}'s Profile
+    </div>
+    <div class="playlist__name">
+      {{ user.get_full_name }}
+    </div>
+    <div>Email: <span class='grey_text'> {{user.email}} <span></div>
+      <a href="{% url 'main:update_profile' %}" class="profile">
+        <span class='username hide-onhover'>Update</span>
+        <span class='logout username'>Profile</span>
+      </a>
+  </div>
+</div>
+
+<div class="playlist__optionbar-container text-center">
+  <div style='font-size: 18px'>
+  <ul class="list-unstyled text-center">
+    <p>
+      <strong>Bio:</strong> {{ user.profile.biography }}
+    </p>
+    <p>
+      <strong>Age:</strong> {{ user.profile.calculate_age }} years old
+    </p>
+    <p>
+      <strong>Profile created {{ user.profile.days_since_creation }} days ago </strong>
+    </p>
+  </ul>
+</div>
+</div>
+{% endblock %}

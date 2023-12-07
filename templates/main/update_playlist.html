@@ -1,0 +1,41 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'formStyle.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block iframe %}
+ 
+{% endblock %}
+
+{% block main %}
+<div class="signup_body" style="background-color: #222326">
+
+  <form method="post" enctype="multipart/form-data" class="login_form" style="background-color: #222326">
+    {% csrf_token %}
+    
+    <div class="signup-title">
+      <strong> Update {{user.username}}'s Playlist </strong>
+    </div>
+    
+    <label class="label" for="{{ playlist_form.title.id_for_label }}">Title:</label>
+      {{ playlist_form.title }}
+
+      <label class="label" for="{{ playlist_form.songs.id_for_label }}" style="font-family: Circular, Helvetica Neue, Helvetica, Arial, sans-serif;">Songs:</label>
+      {{ playlist_form.songs }}
+
+      <label class="label" for="{{ playlist_form.description.id_for_label }}">Description:</label>
+      {{ playlist_form.description }}
+
+      <button class='btn btn_log_in' type="submit">Update Playlist</button>
+      <div class="divider"></div>
+      <p class='label center-align'>Don't have any change?</p>
+      <a class='btn btn_sign_up' href="{% url 'main:playlist_list' %}" >Back</a>
+
+  </form>
+</div>
+{% endblock %}

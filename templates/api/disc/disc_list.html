@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    Disc List
+{% endblock title %}
+
+{% block content %}
+    <div class="container d-flex align-items-center justify-content-between">
+        <h2 class="text-center mb-2">Disc List</h2>
+        <div class="d-flex align-items-center">
+            <form class="form-inline" method="GET" action="{% url 'api:disc_list' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="search" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary" style="margin-right: 20px;">Search</button>
+                    </div>
+                </div>
+            </form>
+            <a href="{% url 'api:create_disc' %}" class="btn btn-primary ml-2">Create</a>
+        </div>
+    </div>
+    <h1></h1>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="bg-dark text-light">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">User</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Genres</th>
+                    <th class="text-center">Duration</th>
+                    <th class="text-center">Video</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for disc in object_list %}
+                    <tr class="{% cycle 'table-dark' 'table-secondary' %}">
+                        <td class="text-center">{{ disc.id }}</td>
+                        <td class="text-center">{{ disc.user }}</td>
+                        <td class="text-center">{{ disc.title }}</td>
+                        <td class="text-center">
+                            {% for genre in disc.genres.all %}
+                                {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>     
+                        <td class="text-center">{{ disc.duration }}</td>
+                        <td class="text-center">{{ disc.video }}</td>
+                        <td class="text-center">
+                            <a href="{% url 'api:update_disc' pk=disc.id %}" class="btn btn-warning btn-sm" style="margin-right: 10px;">Update</a>
+                            <a href="{% url 'api:disc_detail' pk=disc.id %}" class="btn btn-info btn-sm" style="margin-right: 10px;">Detail</a>
+                            <a href="{% url 'api:delete_disc' pk=disc.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+
+
+
+
+

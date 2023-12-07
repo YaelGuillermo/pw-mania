@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+   Profile Detail
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Profile Detail</h2>
+        <dl class="row">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">{{ profile.id }}</dd>
+
+            <dt class="col-sm-3">User:</dt>
+            <dd class="col-sm-9">{{ profile.user.username }}</dd>
+
+            <dt class="col-sm-3">Birth Date:</dt>
+            <dd class="col-sm-9">{{ profile.birth_date }}</dd>
+
+            <dt class="col-sm-3">Biography:</dt>
+            <dd class="col-sm-9">{{ profile.biography }}</dd>
+
+            <dt class="col-sm-3">Created at:</dt>
+            <dd class="col-sm-9">{{ profile.created_at }}</dd>
+
+            <dt class="col-sm-3">Image:</dt>
+            <dd class="col-sm-9">
+                {% if profile.image %}
+                    <img src="{{ profile.image.url }}" alt="{{ profile.user.username }}" class="img-fluid" style="max-width: 400px; max-height: 600px;">
+                {% else %}
+                    No Image
+                {% endif %}
+            </dd>
+        </dl>
+
+        <a href="{% url 'api:profile_list' %}" class="btn btn-secondary">Back to Profile List</a>
+    </div>
+{% endblock content %}
+
+
+
+

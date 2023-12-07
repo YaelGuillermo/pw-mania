@@ -1,0 +1,70 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+  
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+    <div class="playlist__left">
+        <div class="playlist__album">
+            {% if country.image %}
+                <img src="{{ country.image.url }}" class="playlist__img" alt="{{ country.image }}">
+            {% else %}
+                <img src="{% static 'profiles/NoProfile.jpg' %}" class="playlist__img" alt="Default photo">
+            {% endif %}
+        </div>
+    </div>
+    <div class="playlist__right">
+        <div style='text-transform: uppercase; font-weight: 700; font-size: 12px;'>
+            {{ country.abbreviation }}
+        </div>
+        <div class="playlist__name">
+            {{ country.name }}
+        </div>
+    </div>
+</div>
+
+<div class="playlist__optionbar-container text-center">
+  <div style='font-size: 18px'>
+    <div class="homecontainer">
+      <div class="category">
+        <div class="catTitle">
+          <span class='label catName underline-on-hover'> {{ country.name }}'s artists </span>
+          <a href="{% url 'main:album_list' %}">
+            <span class='label seeall underline-on-hover'>SEE ALL</span>
+          </a>
+        </div>
+        <div class="cardContainer">
+          {% for artist in artists_in_country %}
+            <div class="card c1">
+              <div class="albumcover">
+                <img class="albumimg" src="{% if artist.image %}{{ artist.image.url }}{% else %}{% static 'profiles/NoProfile.jpg' %}{% endif %}" alt="{{ artist.name }}'s photo">
+                <!-- Botón de reproducción
+                <div class="albumplay" onclick="playAlbum(['id1', 'id2', 'id3'])">
+                  <img src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png" alt="">
+                </div>-->
+              </div>
+              <a href="{% url 'main:artist_detail' pk=artist.id %}">
+                <span class='label albumtitle bond-to-two-lines'>{{ artist.name }}</span>
+              </a>
+              <span class='label albumauthor bond-to-two-lines'>
+                {% for genre in artist.genres.all %}
+                  {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

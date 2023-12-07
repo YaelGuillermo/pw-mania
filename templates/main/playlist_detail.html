@@ -1,0 +1,82 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+    <div class="playlist__left">
+      <div class="playlist__album">
+        {% if user.profile.image %}
+          <img src="{{ user.profile.image.url }}" class="playlist__img" alt="{{ user.username }}'s photo">
+        {% else %}
+          <img src="{% static 'default-profile-image.jpg' %}" class="playlist__img" alt="Default photo">
+        {% endif %}
+      </div>
+    </div>
+    <div class="playlist__right">
+      <div style='text-transform: uppercase; font-weight: 700;font-size: 12px;'>
+        <a href="{% url 'main:profile'%}">
+            {{ user.username }}
+        </a>
+      </div>
+      <div class="playlist__name">
+        {{ playlist.title }}
+      </div>
+    </div>
+  </div>
+
+  <div class="playlist__optionbar-container text-center">
+    <div style='font-size: 18px'>
+    <ul class="list-unstyled text-center">
+      <p>
+        <strong>Description:</strong> {{ playlist.description }}
+      </p>
+    </ul>
+  </div>
+  </div>
+
+  <div class="playlist__list">
+    <div class="playlist__header" >
+        <div class="playlist__headerTitle"># TITLE</div>
+        <div class="playlist__headerAlbum">ALBUM</div>
+        <div class="playlist__headerDate">ARTIST</div>
+        <div class="playlist__headerDuration">
+        <img src="https://img.icons8.com/pastel-glyph/344/clock--v1.png" alt="">
+        </div>
+    </div>
+    <hr class="divider">
+
+    <div class="playlist__songlist">
+      {% for song in playlist.songs.all %}    
+      <form action="" method="get">
+        <div class="playlist__song playlist__row" onclick='playSong("{{ song.get_video_id }}")'>
+        <div class="playlist__headerTitle">
+          <img class="playlist__albumimg" src="{{song.album.image.url}}" alt =''/>
+          <div class="playlist__songTitle ellipsis_one_line">
+          {{song.title}}
+          </div>
+
+          </div>
+        <div class="playlist__headerAlbum ellipsis_one_line">{{song.album}}</div>
+        <div class="playlist__headerDate">
+          {% for song in song.album.artists.all %}
+            {{ song.name }}
+            {% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div class="playlist__headerDuration">
+        {{song.format_duration}}
+        <button class="delete">
+            <img src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png" alt="">
+         </button>
+        <!--<button type='submit' class="delete"><img src="https://cdn.discordapp.com/attachments/768083738848133130/777588678028951572/delete-icon-28.jpg" alt=""</button>-->
+        </div>
+    </div>
+    </form>
+    {% endfor %}
+    </div>
+  </div>
+{% endblock %}

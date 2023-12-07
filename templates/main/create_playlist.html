@@ -1,0 +1,33 @@
+{% extends 'base/index.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'formStyle.css' %}?{% now 'U' %}" />
+<!-- Agregar enlace al archivo de estilos de Bootstrap -->
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+{% endblock %} {% block home %} {% endblock %} {% block iframe %} {% endblock %}
+{% block main %} 
+<div class="container mt-5">
+  <h2>Create Playlist</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="{{ playlist_form.title.id_for_label }}">Title:</label>
+      {{ playlist_form.title }}
+    </div>
+    <div class="form-group">
+  <label for="{{ playlist_form.songs.id_for_label }}">Songs:</label>
+  {{ playlist_form.songs }}
+</div>
+    <div class="form-group">
+      <label for="{{ playlist_form.description.id_for_label }}"
+        >Description:</label
+      >
+      {{ playlist_form.description }}
+    </div>
+    <button type="submit" class="btn btn-primary">Create Playlist</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'playlist.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block home %}
+{% endblock %}
+
+{% block iframe %}
+ 
+{% endblock %}
+
+{% block main %}
+<div class="playlist__banner">
+  <div class="playlist__left">
+    <div class="playlist__album">
+      {% if user.profile.image %}
+        <img src="{{ user.profile.image.url }}" class="playlist__img" alt="{{ user.username }}'s photo">
+      {% else %}
+        <img src="{% static 'default-profile-image.jpg' %}" class="playlist__img" alt="Default photo">
+      {% endif %}
+    </div>
+  </div>
+  <div class="playlist__right">
+    <div style='text-transform: uppercase; font-weight: 700;font-size: 12px;'>
+      {{ user.get_full_name }}
+    </div>
+    <div class="playlist__name">
+      {{ user.username }}'s Library
+    </div>
+      <a href="{% url 'main:create_playlist' %}" class="profile">
+        <span class='username hide-onhover'>Create</span>
+        <span class='logout username'>Playlist</span>
+      </a>
+  </div>
+</div>
+
+<div class="playlist__optionbar-container text-center">
+  <div style='font-size: 18px'>
+    <div class="homecontainer">
+      <div class="category">
+        <div class="catTitle">
+          <span class='label catName underline-on-hover'> {{ user.username }}'s playlists </span>
+        </div>
+        <div class="cardContainer">
+          {% for playlist in playlists %}
+            <div class="card c1">
+              <div class="albumcover">
+                  {% if playlist.user.profile.image %}
+                      <img class="albumimg" src="{{ playlist.user.profile.image.url }}" alt="{{ playlist.title }}">
+                  {% else %}
+                      <img class="albumimg" src="{% static 'default_profile_image.jpg' %}" alt="{{ playlist.title }}">
+                  {% endif %} 
+                <div class="albumplay" onclick='playPlaylist("{{ forloop.counter0 }}","{{ playlist.id }}")'>
+                  <img src="https://cdn.discordapp.com/attachments/768083738848133130/769476261181128734/image_1.png" alt="">
+                </div>
+              </div>
+              <a href="{% url 'main:playlist_detail' pk=playlist.id %}">
+                <span class='label albumtitle bond-to-two-lines'>{{ playlist.title }}</span>
+              </a>
+              <span class='label albumauthor bond-to-two-lines' style='margin-bottom: 5px;'>Created by: {{ playlist.user.username }}</span>
+              <a href="{% url 'main:update_playlist' pk=playlist.id %}" class="profile" style='margin-bottom: 5px;'>
+                <span class='username hide-onhover'>Update</span>
+                <span class='logout username'>Playlist</span>
+              </a>
+              <a href="{% url 'main:delete_playlist' pk=playlist.id %}" class="profile" style='margin-bottom: 5px;'>
+                <span class='username hide-onhover'>Delete</span>
+                <span class='logout username'>Playlist</span>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

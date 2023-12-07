@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+    Create Country
+{% endblock title %}
+
+{% block content %}
+    <h2>Create Country</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Create Country</button>
+                <a href="{% url 'api:country_list' %}" class="btn btn-secondary">Country List</a>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+

@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+   Album Detail
+{% endblock title %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Album Detail</h2>
+    <dl class="row">
+      <dt class="col-sm-3">ID:</dt>
+      <dd class="col-sm-9">{{ album.id }}</dd>
+
+      <dt class="col-sm-3">Title:</dt>
+      <dd class="col-sm-9">{{ album.title }}</dd>
+
+      <dt class="col-sm-3">Artists:</dt>
+      <dd class="col-sm-9">
+        {% for artist in album.artists.all %}
+          {{ artist.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </dd>
+
+      <dt class="col-sm-3">Genres:</dt>
+      <dd class="col-sm-9">
+        {% for genre in album.genres.all %}
+          {{ genre.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </dd>
+
+      <dt class="col-sm-3">Date:</dt>
+      <dd class="col-sm-9">{{ album.date }}</dd>
+
+      <dt class="col-sm-3">Image:</dt>
+      <dd class="text-center">
+          {% if album.image %}
+              <img src="{{ album.image.url }}" alt="{{ album.title }}" class="img-fluid" style="max-width: 400px; max-height: 600px;">
+          {% else %}
+              No Image
+          {% endif %}
+      </dd>
+    </dl>
+
+    <a href="{% url 'api:album_list' %}" class="btn btn-secondary">Back to Album List</a>
+  </div>
+{% endblock content %}
+
+
+
